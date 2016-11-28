@@ -23,15 +23,17 @@ WORKDIR $HTTPD_PREFIX
 ENV HTTPD_VERSION 2.4.23
 ENV HTTPD_SHA1 5101be34ac4a509b245adb70a56690a84fcc4e7f
 ENV HTTPD_GPG_KEY A93D62ECC3C8EA12DB220EC934EA76E6791485A8
-
 ENV HTTPD_BZ2_URL https://www.apache.org/dyn/closer.cgi?action=download&filename=httpd/httpd-$HTTPD_VERSION.tar.bz2
 ENV HTTPD_ASC_URL https://www.apache.org/dist/httpd/httpd-$HTTPD_VERSION.tar.bz2.asc
+
+ENV APACHE_RUN_USER  www-data
+ENV APACHE_RUN_GROUP www-data
 
 RUN set -x \
   && runDeps='apr-dev apr-util-dev perl' \
   && apk --update add --no-cache --virtual .build-deps \
       $runDeps \
-  		ca-certificates \
+      ca-certificates \
       gcc \
       gnupg \
       libc-dev \
@@ -60,6 +62,8 @@ RUN set -x \
   && cd .. \
   && rm -r src \
   && sed -ri \
+    -e 's/User daemon/User www-data/' \
+    -e 's/Group daemon/Group www-data/' \
     -e 's!^(\s*CustomLog)\s+\S+!\1 /proc/self/fd/1!g' \
     -e 's!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/2!g' \
     -e 's/#LoadModule rewrite_module/LoadModule rewrite_module/' \
