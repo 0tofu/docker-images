@@ -11,4 +11,3 @@ RUN apk --update add --no-cache libstdc++ build-base openssl-dev sqlite sqlite-d
 EXPOSE 1025 1080
 
 ENTRYPOINT ["mailcatcher", "--foreground", "--ip=0.0.0.0"]
-
