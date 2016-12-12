@@ -79,7 +79,7 @@ RUN set -xe \
   && apk del --purge .build-deps
 
 # phpmyadminのインストール
-ENV PHP_MY_ADMIN_VERSION 4.6.4
+ENV PHP_MY_ADMIN_VERSION 4.6.5.2
 ENV PHP_MY_ADMIN_URL https://files.phpmyadmin.net/phpMyAdmin/${PHP_MY_ADMIN_VERSION}/phpMyAdmin-${PHP_MY_ADMIN_VERSION}-all-languages.tar.gz
 ENV PHP_MY_ADMIN_DIR /var/www/pma
 

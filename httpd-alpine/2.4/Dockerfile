@@ -69,6 +69,7 @@ RUN set -x \
     -e 's/#LoadModule rewrite_module/LoadModule rewrite_module/' \
     -e 's/#LoadModule vhost_alias_module/LoadModule vhost_alias_module/' \
     -e 's/#LoadModule expires_module/LoadModule expires_module/' \
+    -e 's/#LoadModule include_module modules\/mod_include.so/LoadModule include_module modules\/mod_include.so/' \
     -e '$ a IncludeOptional conf/other/*.conf' \
     "$HTTPD_PREFIX/conf/httpd.conf" \
   && runDeps="$runDeps $( \
