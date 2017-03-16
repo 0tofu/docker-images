@@ -5,7 +5,7 @@ RUN apk --update add --no-cache libstdc++ build-base openssl-dev sqlite sqlite-d
  && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
  && echo "Asia/Tokyo" > /etc/timezone \
  && gem install mailcatcher --no-ri --no-rdoc \
- && apk del build-base ruby-dev tzdata \
+ && apk del build-base ruby-dev openssl-dev tzdata \
  && rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
 
 EXPOSE 1025 1080
