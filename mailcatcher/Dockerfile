@@ -1,4 +1,4 @@
-FROM ruby:2.4-alpine
+FROM ruby:2.3-alpine
 MAINTAINER otofu <otofu.xxx+docker@gmail.com>
 
 RUN apk --update add --no-cache libstdc++ build-base openssl-dev sqlite sqlite-dev ruby-dev tzdata \
