@@ -30,6 +30,7 @@ RUN set -xe \
       openssl \
       openssl-dev \
       sqlite-dev \
+      pcre-dev \
       git \
   && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
   && docker-php-ext-install gd mbstring opcache mysqli pdo pdo_mysql zip bcmath mcrypt \
