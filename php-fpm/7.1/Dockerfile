@@ -31,9 +31,10 @@ RUN set -xe \
       openssl-dev \
       sqlite-dev \
       pcre-dev \
+      postgresql-dev \
       git \
   && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
-  && docker-php-ext-install gd mbstring opcache mysqli pdo pdo_mysql zip bcmath mcrypt \
+  && docker-php-ext-install gd mbstring opcache mysqli pdo pdo_mysql pdo_pgsql pgsql zip bcmath mcrypt \
   && pecl install apcu \
   && docker-php-ext-enable apcu \
   && cd /tmp && \
