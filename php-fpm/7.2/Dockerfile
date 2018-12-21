@@ -1,4 +1,4 @@
-FROM php:7.1-fpm-alpine
+FROM php:7.2-fpm-alpine
 MAINTAINER otofu <otofu.xxx+docker@gmail.com>
 
 ENV PHPIZE_DEPS autoconf file g++ gcc libc-dev make pkgconf re2c
@@ -27,14 +27,12 @@ RUN set -xe \
       libjpeg-turbo-dev \
       libpng-dev \
       libxml2-dev \
-      libressl \
-      libressl-dev \
       sqlite-dev \
       pcre-dev \
       postgresql-dev \
       git \
   && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
-  && docker-php-ext-install gd mbstring opcache mysqli pdo pdo_mysql pdo_pgsql pgsql zip bcmath mcrypt \
+  && docker-php-ext-install gd mbstring opcache mysqli pdo pdo_mysql pdo_pgsql pgsql zip bcmath \
   && pecl install apcu \
   && docker-php-ext-enable apcu \
   && cd /tmp && \
@@ -52,11 +50,8 @@ RUN set -xe \
       | xargs -r apk info --installed \
       | sort -u \
     )" \
-  && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing gnu-libiconv \
   && apk add --virtual .php-rundeps $runDeps \
   && apk del --purge .build-deps
-
-ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 COPY ./etc /etc
 COPY ./usr /usr
