@@ -2,7 +2,7 @@ FROM php:5.6-apache
 
 RUN set -ex \
  && apt-get update \
- && apt-get install -y --no-install-recommends vim wget ssmtp git unzip \
+ && apt-get install -y --no-install-recommends vim wget ssmtp git unzip mysql-client \
  && savedAptMark="$(apt-mark showmanual)" \
  && apt-get install -y --no-install-recommends libfreetype6-dev libjpeg62-turbo-dev libjpeg-dev libpng-dev libpq-dev libzip-dev \
  && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
