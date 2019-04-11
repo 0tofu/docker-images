@@ -4,9 +4,9 @@ RUN set -ex \
  && apt-get update \
  && apt-get install -y --no-install-recommends vim wget ssmtp git unzip mysql-client \
  && savedAptMark="$(apt-mark showmanual)" \
- && apt-get install -y --no-install-recommends libfreetype6-dev libjpeg62-turbo-dev libjpeg-dev libpng-dev libpq-dev libzip-dev libgmp-dev libssh2-1-dev \
+ && apt-get install -y --no-install-recommends libfreetype6-dev libjpeg62-turbo-dev libjpeg-dev libpng-dev libpq-dev libzip-dev libgmp-dev libssh2-1-dev libldap2-dev \
  && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
- && docker-php-ext-install -j "$(nproc)" gd opcache mysqli pdo_mysql pdo_pgsql zip gmp \
+ && docker-php-ext-install -j "$(nproc)" gd opcache mysqli pdo_mysql pdo_pgsql zip gmp ldap \
  && pecl install ssh2-1.0 && docker-php-ext-enable ssh2 \
  && mkdir -p /usr/src/php/ext/uploadprogress \
  && up_url="https://github.com/wodby/pecl-php-uploadprogress/archive/latest.tar.gz" \
@@ -28,6 +28,7 @@ RUN set -ex \
 RUN curl -sS https://getcomposer.org/installer | php \
  && mv composer.phar /usr/local/bin/composer \
  && chmod 755 /usr/local/bin/composer \
+ && composer config -g repos.packagist composer https://packagist.jp \
  && composer global require hirak/prestissimo
 
 ENV PATH ./vendor/bin:/root/.composer/vendor/bin/drush:${PATH}
