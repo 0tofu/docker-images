@@ -2,7 +2,7 @@ FROM php:7.1-apache
 
 RUN set -ex \
  && apt-get update \
- && apt-get install -y --no-install-recommends vim wget ssmtp git unzip mysql-client \
+ && apt-get install -y --no-install-recommends vim wget msmtp msmtp-mta git unzip default-mysql-client \
  && savedAptMark="$(apt-mark showmanual)" \
  && apt-get install -y --no-install-recommends libfreetype6-dev libjpeg62-turbo-dev libjpeg-dev libpng-dev libpq-dev libzip-dev libgmp-dev libssh2-1-dev libldap2-dev \
  && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
