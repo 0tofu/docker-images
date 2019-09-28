@@ -1,12 +1,13 @@
 FROM php:7.2-apache
 
 RUN set -ex \
- && apt-get update \
- && apt-get install -y --no-install-recommends vim wget msmtp msmtp-mta git unzip default-mysql-client \
+ && apt update && apt -y upgrade \
+ && apt install -y --no-install-recommends vim wget msmtp msmtp-mta git unzip default-mysql-client \
  && savedAptMark="$(apt-mark showmanual)" \
- && apt-get install -y --no-install-recommends libfreetype6-dev libjpeg62-turbo-dev libjpeg-dev libpng-dev libpq-dev libzip-dev libgmp-dev libssh2-1-dev libldap2-dev libicu-dev \
+ && apt install -y --no-install-recommends libfreetype6-dev libjpeg62-turbo-dev libjpeg-dev libpng-dev libpq-dev libzip-dev libgmp-dev libssh2-1-dev libldap2-dev libicu-dev \
  && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
  && docker-php-ext-install -j "$(nproc)" gd opcache mysqli pdo_mysql pdo_pgsql zip gmp ldap intl \
+ && pecl install xdebug && docker-php-ext-enable xdebug \
  && pecl install ssh2-1.0 && docker-php-ext-enable ssh2 \
  && mkdir -p /usr/src/php/ext/uploadprogress \
  && up_url="https://github.com/wodby/pecl-php-uploadprogress/archive/latest.tar.gz" \
@@ -22,7 +23,8 @@ RUN set -ex \
     | cut -d: -f1 \
     | sort -u \
     | xargs -rt apt-mark manual \
- && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+ && apt purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+ && apt clean \
  && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://getcomposer.org/installer | php \
