@@ -4,9 +4,9 @@ RUN set -ex \
  && apt-get update \
  && apt-get install -y --no-install-recommends vim wget msmtp msmtp-mta git unzip default-mysql-client \
  && savedAptMark="$(apt-mark showmanual)" \
- && apt-get install -y --no-install-recommends libfreetype6-dev libjpeg62-turbo-dev libjpeg-dev libpng-dev libpq-dev libzip-dev libgmp-dev libssh2-1-dev libldap2-dev \
+ && apt-get install -y --no-install-recommends libfreetype6-dev libjpeg62-turbo-dev libjpeg-dev libpng-dev libpq-dev libzip-dev libgmp-dev libssh2-1-dev libldap2-dev libicu-dev \
  && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
- && docker-php-ext-install -j "$(nproc)" gd opcache mysqli pdo_mysql pdo_pgsql zip gmp ldap \
+ && docker-php-ext-install -j "$(nproc)" gd opcache mysqli pdo_mysql pdo_pgsql zip gmp ldap intl \
  && pecl install ssh2-1.0 && docker-php-ext-enable ssh2 \
  && mkdir -p /usr/src/php/ext/uploadprogress \
  && up_url="https://github.com/wodby/pecl-php-uploadprogress/archive/latest.tar.gz" \
