@@ -2,7 +2,7 @@ FROM php:7.2-apache
 
 RUN set -ex \
  && apt update && apt -y upgrade \
- && apt install -y --no-install-recommends vim wget msmtp msmtp-mta git unzip default-mysql-client \
+ && apt install -y --no-install-recommends vim wget msmtp msmtp-mta git unzip default-mysql-client locales \
  && savedAptMark="$(apt-mark showmanual)" \
  && apt install -y --no-install-recommends libfreetype6-dev libjpeg62-turbo-dev libjpeg-dev libpng-dev libpq-dev libzip-dev libgmp-dev libssh2-1-dev libldap2-dev libicu-dev \
  && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
@@ -26,6 +26,15 @@ RUN set -ex \
  && apt purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
  && apt clean \
  && rm -rf /var/lib/apt/lists/*
+
+RUN { \
+  echo 'en_US.UTF-8 UTF-8'; \
+  echo 'ja_JP.UTF-8 UTF-8'; \
+} > /etc/locale.gen \
+ && locale-gen
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 RUN curl -sS https://getcomposer.org/installer | php \
  && mv composer.phar /usr/local/bin/composer \

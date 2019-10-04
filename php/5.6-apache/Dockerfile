@@ -2,7 +2,7 @@ FROM php:5.6-apache
 
 RUN set -ex \
  && apt-get update \
- && apt-get install -y --no-install-recommends vim wget ssmtp git unzip mysql-client \
+ && apt-get install -y --no-install-recommends vim wget ssmtp git unzip mysql-client locales \
  && savedAptMark="$(apt-mark showmanual)" \
  && apt-get install -y --no-install-recommends libfreetype6-dev libjpeg62-turbo-dev libjpeg-dev libpng-dev libpq-dev libzip-dev \
  && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-png-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
@@ -23,6 +23,15 @@ RUN set -ex \
     | xargs -rt apt-mark manual \
  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
  && rm -rf /var/lib/apt/lists/*
+
+RUN { \
+  echo 'en_US.UTF-8 UTF-8'; \
+  echo 'ja_JP.UTF-8 UTF-8'; \
+} > /etc/locale.gen \
+ && locale-gen
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 RUN curl -sS https://getcomposer.org/installer | php \
  && mv composer.phar /usr/local/bin/composer \
